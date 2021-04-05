@@ -11,6 +11,7 @@ function App() {
       let api = await fetch("/.netlify/functions/data_retrieval");
       let Data = await api.json();
       data[1](Data.message);
+      
        
     })();
   }, [data]);

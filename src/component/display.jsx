@@ -26,7 +26,7 @@ export let DisplayComponents = ({ value, id }) => {
 
         <div style={{ display: "flex", marginTop: "3%", flexWrap: "wrap" }}>
           <div style={{ marginTop: "03px" }}>
-            <EditPopUp />
+            <EditPopUp  id={id}/>
           </div>
           <DeleteIconComponent id={id} />
         </div>

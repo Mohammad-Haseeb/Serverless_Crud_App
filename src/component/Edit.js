@@ -7,15 +7,25 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 
-import React from 'react';
+import React ,{useRef,useState}from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const formStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
+
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -28,12 +38,27 @@ const useStyles = makeStyles((theme) => ({
   }));
   
 
-export default function EditPopUp() {
+export default function EditPopUp({id}) {
     const classes = useStyles();
+    const formClasses = formStyles();
+    const ref = useRef();
   const [open, setOpen] = React.useState(false);
+  const [state, setstate] = useState({});
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  let handleSubmit=(e)=>{
+    e.preventDefault();
+    (async()=>{
+           let api=await fetch('/.netlify/functions/update_data',{
+             method:"post",
+             body:JSON.stringify({id:id,data:ref.current.value})
+           });
+           setstate(api.json());
+           console.log(state);
 
+    })()
+    setOpen(false);
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -65,18 +90,21 @@ export default function EditPopUp() {
       >
         <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText>
+         <div>
+         <form className={formClasses.root} onSubmit={handleSubmit} autoComplete="off">
+      <TextField id="filled-basic" inputRef={ref} label="Filled" variant="filled" required />
+      <br/>
+      <Button  style={{width:"50px"}} type="submit" color="primary" variant="contained">
+            Agree
+          </Button>
+      </form>
+         </div>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
-            Disagree
+             Close
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
+         
         </DialogActions>
       </Dialog>
     </div>
