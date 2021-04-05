@@ -49,9 +49,10 @@ let DeleteIconComponent = ({ id }) => {
         method:"post",
         body:JSON.stringify({message:id}),
       });
+    console.log(api);
+
     })()
     context[1]([...arr]);
-    console.log(id);
   };
   return (
     <>
