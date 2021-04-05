@@ -45,7 +45,7 @@ let handleSubmit=(e)=>{
     <form className={classes.root} onSubmit={handleSubmit} autoComplete="off">
       <div style={{display:"flex" , flexWrap:"wrap" }}>
         <div>
-      <TextField id="outlined-basic"  inputRef={reference} label="Outlined" variant="outlined" required />
+      <TextField id="outlined-basic"  inputRef={reference} label="Enter Name" variant="outlined" required />
       </div>
       <div className={classesButton.root}>
       <Button variant="contained" type="submit" color="primary">Submit</Button>
