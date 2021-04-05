@@ -29,6 +29,16 @@ let handleSubmit=(e)=>{
 
   e.preventDefault();
    console.log("value : ",reference.current.value);
+   (async ()=>{
+     let api=await fetch("/.netlify/functions/create_data",{
+       method:"post",
+       body:JSON.stringify({Name:reference.current.value})
+     })
+     console.log(api.message);
+   }
+
+
+   )()
 } 
 
   return (
